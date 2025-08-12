@@ -182,10 +182,3 @@ if __name__ == "__main__":
     main()
 
 
-
-
-fdh fgdfgbksbgbjbgibdfigbisdfgigb
-
-
- dfg hfdddddddgbsdg
-
