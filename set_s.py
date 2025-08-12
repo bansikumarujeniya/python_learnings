@@ -103,8 +103,3 @@ print(set1)
 
 
 
-tdbbektghoedbgblsdnlfgnsdngn
-
-rgkejkrgkke g jkrf gjkasdgjkasklasngl
-
-fd aj jker gjerhg re gjaeh gja sjd  
