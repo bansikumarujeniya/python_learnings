@@ -101,3 +101,10 @@ d = {1: "One", 2: "Two", 3: "Three"}
 set1 = set(d)
 print(set1)
 
+
+
+tdbbektghoedbgblsdnlfgnsdngn
+
+rgkejkrgkke g jkrf gjkasdgjkasklasngl
+
+fd aj jker gjerhg re gjaeh gja sjd  
