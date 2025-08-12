@@ -102,4 +102,13 @@ set1 = set(d)
 print(set1)
 
 
+<<<<<<< HEAD
+
+tdbbektghoedbgblsdnlfgnsdngn
+
+rgkejkrgkke g jkrf gjkasdgjkasklasngl
+
+fd aj jker gjerhg re gjaeh gja sjd  
+=======
 jhydhjdsghdghtuerthdrthdsrur
+>>>>>>> a79d9be134ef252e87f9167e22d2de03cfb4c180
