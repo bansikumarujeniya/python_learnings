@@ -88,7 +88,7 @@ n =[1,2,3,4,5,6]
 even = filter(lambda x : x%2 == 0,n)
 print(list(even))
 
-#!6
+#16
 import functools
 import operator
 
@@ -100,3 +100,7 @@ print(functools.reduce(operator.mul,a))
 
 print(functools.reduce(operator.add, ["geeks","for","geeks"]))
 
+#17
+n =[1,2,3,54,5,6,8,9,8]
+odd = filter(lambda x : x%2 == 1,n)
+print(list(odd))

@@ -86,5 +86,11 @@ mystr = "banana"
 for x in mystr:
     print(x)
 
+#8
+mystr = "apple"
+
+for x in mystr:
+    print(x)
+
 
 

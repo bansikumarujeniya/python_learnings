@@ -190,3 +190,87 @@ class Person:
 p1 = Person("John",78)
 p1.age = 89
 print(p1.age)
+
+
+#18
+class A:
+    def show_name(self):
+        print("A")
+
+class B:
+    def show_name(self):
+        print("B")
+
+class C:
+    def show_name(self):
+        print("C")
+
+instance_b = B()
+instance_a = A()
+instance_c = C()
+
+instance_b.show_name()
+instance_a.show_name()
+instance_c.show_name()
+
+
+#19
+class A:
+    def show_name(self):
+        print("A")
+
+class B:
+    def show_name(self):
+        print("B")
+
+class C:
+    def show_name(self):
+        print("C")
+
+instance_b = B()
+instance_c = C()
+instance_a = A()
+
+instance_b.show_name()
+instance_c.show_name()
+instance_a.show_name()
+
+#20
+class Person:
+    def __init__(self, fname, lname):
+        self.firstname = fname
+        self.lastname = lname
+
+    def printname(self):
+        print(self.firstname, self.lastname)
+
+
+class Student(Person):
+    def __init__(self, fname, lname):
+        super().__init__(fname, lname)
+
+
+x = Student("Mike", "Olsen")
+x.printname()
+
+#21
+class Person:
+    def __init__(self, fname, lname):
+        self.firstname = fname
+        self.lastname = lname
+
+    def printname(self):
+        print(self.firstname, self.lastname)
+
+
+class Student(Person):
+    def __init__(self, fname, lname, year):
+        super().__init__(fname, lname)
+        self.graduationyear = year
+
+    def welcome(self):
+        print("Welcome", self.firstname, self.lastname, "to the class of", self.graduationyear)
+
+
+x = Student("Mike", "Olsen", 2024)
+x.welcome()
