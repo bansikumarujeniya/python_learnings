@@ -242,3 +242,268 @@ print("Department statistics, sorted by average salary (descending):")
 for item in department_summary:
     department, count, avg_salary = item
     print(f"Department: {department}, Employees: {count}, Average Salary: {avg_salary:.2f}")
+
+
+#Class and Objects
+#1. Define a class Employee with attributes for first_name and last_name. Create an instance of this class for the first employee in the dataset.
+class Employee:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+first_employee_first_name = employee_data['first_name'][0]
+first_employee_last_name = employee_data['last_name'][0]
+
+first_employee = Employee(first_employee_first_name, first_employee_last_name)
+print(f"First employee instance created with name: {first_employee.first_name} {first_employee.last_name}")
+
+#2. Create an object for the employee with employee_id 110 and print their first_name.
+class Employee:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+try:
+    employee_index = employee_data['employee_id'].index(110)
+
+    target_first_name = employee_data['first_name'][employee_index]
+    target_last_name = employee_data['last_name'][employee_index]
+
+    employee_110 = Employee(target_first_name, target_last_name)
+    print(f"First name of employee with ID 110: {employee_110.first_name}")
+
+except ValueError:
+    print("Employee with ID 110 not found.")
+
+#3. Modify the Employee class to include all attributes from the employee_data dictionary (employee_id, first_name, last_name, department, salary, job_title, performance_rating, years_of_experience, location, employment_status).
+class Employee:
+
+    def __init__(self, employee_id, first_name, last_name, department, hire_date,
+                 salary, job_title, performance_rating, years_of_experience,
+                 location, employment_status):
+        self.employee_id = employee_id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.department = department
+        self.hire_date = hire_date
+        self.salary = salary
+        self.job_title = job_title
+        self.performance_rating = performance_rating
+        self.years_of_experience = years_of_experience
+        self.location = location
+        self.employment_status = employment_status
+
+
+try:
+    employee_index = employee_data['employee_id'].index(113)
+    employee_113_data = {key: employee_data[key][employee_index] for key in employee_data}
+    employee_113 = Employee(**employee_113_data)
+
+    print(f"First name of employee with ID 113: {employee_113.first_name}")
+    print(f"Job title of employee with ID 113: {employee_113.job_title}")
+
+except ValueError:
+    print("Employee with ID 113 not found.")
+
+#4. Write a method in the Employee class called get_salary_info() that prints a message like "Liam Smith earns 75000 and has a performance rating of 'Exceeds Expectations'".
+class Employee:
+
+    def __init__(self, employee_id, first_name, last_name, department, hire_date,
+                 salary, job_title, performance_rating, years_of_experience,
+                 location, employment_status):
+        self.employee_id = employee_id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.department = department
+        self.hire_date = hire_date
+        self.salary = salary
+        self.job_title = job_title
+        self.performance_rating = performance_rating
+        self.years_of_experience = years_of_experience
+        self.location = location
+        self.employment_status = employment_status
+
+    def get_salary_info(self):
+        print(
+            f"{self.first_name} {self.last_name} earns {self.salary} and has a performance rating of '{self.performance_rating}'")
+
+try:
+    employee_index = employee_data['employee_id'].index(110)
+
+    employee_110_data = {key: employee_data[key][employee_index] for key in employee_data}
+
+    employee_110 = Employee(**employee_110_data)
+
+    employee_110.get_salary_info()
+
+    first_employee_data = {key: employee_data[key][0] for key in employee_data}
+    first_employee = Employee(**first_employee_data)
+    first_employee.get_salary_info()
+
+except ValueError:
+    print("Employee with ID 110 not found.")
+
+#5. Create a class Department with attributes for name and a list of employees. Write a program to instantiate Department objects for each unique department and populate their employee lists using the provided data.
+class Employee:
+    def __init__(self, employee_id, first_name, last_name, department, hire_date, salary, job_title, performance_rating,
+                 years_of_experience, location, employment_status):
+        self.employee_id = employee_id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.department = department
+        self.hire_date = hire_date
+        self.salary = salary
+        self.job_title = job_title
+        self.performance_rating = performance_rating
+        self.years_of_experience = years_of_experience
+        self.location = location
+        self.employment_status = employment_status
+
+    def __repr__(self):
+        return f"Employee(name='{self.first_name} {self.last_name}', department='{self.department}')"
+
+class Department:
+
+    def __init__(self, name):
+        self.name = name
+        self.employees = []
+
+    def add_employee(self, employee):
+        if isinstance(employee, Employee):
+            self.employees.append(employee)
+        else:
+            raise TypeError("Only Employee objects can be added to a department.")
+
+    def __repr__(self):
+        return f"Department(name='{self.name}')"
+
+if __name__ == "__main__":
+    departments = {}
+    number_of_employees = len(employee_data['employee_id'])
+
+    for i in range(number_of_employees):
+        employee_id = employee_data['employee_id'][i]
+        first_name = employee_data['first_name'][i]
+        last_name = employee_data['last_name'][i]
+        department_name = employee_data['department'][i]
+        hire_date = employee_data['hire_date'][i]
+        salary = employee_data['salary'][i]
+        job_title = employee_data['job_title'][i]
+        performance_rating = employee_data['performance_rating'][i]
+        years_of_experience = employee_data['years_of_experience'][i]
+        location = employee_data['location'][i]
+        employment_status = employee_data['employment_status'][i]
+
+
+        employee = Employee(
+            employee_id, first_name, last_name, department_name, hire_date,
+            salary, job_title, performance_rating, years_of_experience,
+            location, employment_status
+        )
+
+        if department_name not in departments:
+            departments[department_name] = Department(department_name)
+
+        departments[department_name].add_employee(employee)
+
+    print("Populated Departments:")
+    for department_name, department_object in departments.items():
+        print(f"\n--- Department: {department_name} ---")
+        print("Employees:")
+        for employee in department_object.employees:
+            print(f"  - {employee.first_name} {employee.last_name} ({employee.job_title})")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
