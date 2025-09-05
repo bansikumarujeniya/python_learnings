@@ -488,3 +488,53 @@ admin_instance = Admin(
 admin_instance.display_admin_info()
 
 #5.Advanced Object Design: Design a class Company that can manage User objects. The Company class should have a method to hire new employees (adding User objects) and a method to display a report of all employees, including their IDs, names, and job titles. Demonstrate how changes to a User object (e.g., updating an email) are reflected within the Company object, explaining how references to objects work in Python.
+import pandas as pd
+
+class User:
+    def __init__(self, data):
+        self.id = data.get("id")
+        self.name = data.get("name")
+        self.email = data.get("email")
+        self.job_title = data.get("job_title")
+        self.company = data.get("company")
+        self.address = data.get("address")
+        self.last_login = data.get("last_login")
+
+class Company:
+    def __init__(self):
+        self.employees = []
+
+    def hire_employee(self, employee):
+        if isinstance(employee, User):
+            self.employees.append(employee)
+        else:
+            print("Invalid object type. Please provide a User object.")
+
+    def display_employees(self):
+        if not self.employees:
+            print("No employees in the company.")
+            return
+
+        employee_list = [
+            {"ID": emp.id, "Name": emp.name, "Job Title": emp.job_title, "Email": emp.email}
+            for emp in self.employees
+        ]
+        df = pd.DataFrame(employee_list)
+        print(df.to_string(index=False))
+
+my_company = Company()
+user_objects = [User(data) for data in employee_data]
+for user in user_objects:
+    my_company.hire_employee(user)
+
+print("--- Initial Employee Report ---")
+my_company.display_employees()
+
+employee_to_update = my_company.employees[0]
+new_email = "amber@example.com"
+employee_to_update.email = new_email
+print(f"\n--- Updating email for Employee ID {employee_to_update.id} ---")
+print(f"Amber Peterson's new email is: {employee_to_update.email}")
+print("\n--- Updated Employee Report ---")
+my_company.display_employees()
+
