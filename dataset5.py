@@ -644,3 +644,108 @@ else:
     print("Jasprit Bumrah not found")
 
 #3. Extend the Player class to include a stats attribute, which is a dictionary. Add a method get_stats that prints all the stats of the player. Create an object for Virat Kohli and use this method.
+class Player:
+    def __init__(self, name, country, role, batting_style, bowling_style, stats):
+        self.name = name
+        self.country = country
+        self.role = role
+        self.batting_style = batting_style
+        self.bowling_style = bowling_style
+        self.stats = stats
+
+    def get_stats(self):
+        print(f"Stats for {self.name}:")
+        for key, value in self.stats.items():
+            print(f"  {key.replace('_', ' ').title()}: {value}")
+
+virat_kohli_data = cricket_dataset["player_01"]
+virat_kohli = Player(
+    virat_kohli_data["name"],
+    virat_kohli_data["country"],
+    virat_kohli_data["role"],
+    virat_kohli_data["batting_style"],
+    virat_kohli_data["bowling_style"],
+    virat_kohli_data["stats"]
+)
+virat_kohli.get_stats()
+
+#4. Add a method is_allrounder to the Player class that returns True if the player's role is "All-rounder", otherwise False.
+class Player:
+    def __init__(self, name, country, role, batting_style, bowling_style, stats,**kwargs):
+        self.name = name
+        self.country = country
+        self.role = role
+        self.batting_style = batting_style
+        self.bowling_style = bowling_style
+        self.stats = stats
+        self.extra_data = kwargs
+
+    def is_allrounder(self):
+        return self.role == "All-rounder"
+
+
+player_objects = {}
+for player_id, data in cricket_dataset.items():
+    player_objects[player_id] = Player(**data)
+
+print(f"Is Virat Kohli an all-rounder? {player_objects['player_01'].is_allrounder()}")
+print(f"Is Ben Stokes an all-rounder? {player_objects['player_04'].is_allrounder()}")
+print(f"Is Rashid Khan an all-rounder? {player_objects['player_03'].is_allrounder()}")
+print(f"Is Shakib Al Hasan an all-rounder? {player_objects['player_13'].is_allrounder()}")
+
+#5. Create two classes: Player and Team. The Player class should store all player information. The Team class should have a method to add Player objects and a method to calculate the team's average batting average. Instantiate a Team object for India, add all Indian players to it, and calculate the team's average batting average.
+class Player:
+    def __init__(self, name, country, role, batting_style, bowling_style, stats):
+        self.name = name
+        self.country = country
+        self.role = role
+        self.batting_style = batting_style
+        self.bowling_style = bowling_style
+        self.stats = stats
+
+    def is_allrounder(self):
+        return self.role == "All-rounder"
+
+
+class Team:
+    def __init__(self, name):
+        self.name = name
+        self.players = []
+
+    def add_player(self, player):
+        if isinstance(player, Player):
+            self.players.append(player)
+        else:
+            print(f"Error: {player} is not a valid Player object.")
+
+    def calculate_average_batting_average(self):
+        if not self.players:
+            return 0
+        total_batting_average = 0
+        for player in self.players:
+            total_batting_average += player.stats["batting_average"]
+        return total_batting_average / len(self.players)
+
+
+team_india = Team("India")
+
+for player_id, player_data in cricket_dataset.items():
+    if player_data["country"] == "India":
+        player = Player(
+            name=player_data["name"],
+            country=player_data["country"],
+            role=player_data["role"],
+            batting_style=player_data["batting_style"],
+            bowling_style=player_data["bowling_style"],
+            stats=player_data["stats"]
+        )
+        team_india.add_player(player)
+
+india_avg_batting_average = team_india.calculate_average_batting_average()
+
+print(f"The average of batting average for Team {team_india.name} is: {india_avg_batting_average:.2f}")
+print(f"\nIndian players in Team {team_india.name}:")
+print("| Player Name        | Role           | Batting Average |")
+print("|--------------------|----------------|-----------------|")
+for player in team_india.players:
+    print(f"| {player.name:<18} | {player.role:<14} | {player.stats['batting_average']:<15.2f} |")

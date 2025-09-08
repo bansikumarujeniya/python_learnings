@@ -412,7 +412,7 @@ if __name__ == "__main__":
         print("Employees:")
         for employee in department_object.employees:
             print(f"  - {employee.first_name} {employee.last_name} ({employee.job_title})")
-
+            
 
 
 
