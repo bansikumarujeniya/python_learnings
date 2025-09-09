@@ -322,4 +322,294 @@ for item_tuple in title_director_genre_list:
 
 print("The tuple with the longest title is:", longest_title_tuple)
 
+#Dictionary
+#1. Assuming the dataset is a dictionary, what is the key for the list of IMDb ratings?
+imdb_ratings = movies_data['rating_imdb']
+print(imdb_ratings)
+
+imdb_ratings_dict = dict(zip(movies_data["title"], movies_data["rating_imdb"]))
+print(imdb_ratings_dict)
+
+#2. How many key-value pairs are in the dataset dictionary?
+num_key_value_pairs = len(movies_data)
+print(f"number of key-value pairs in the dataset dictionary is: {num_key_value_pairs}")
+
+#3. Create a new dictionary for the movie "The Batman" containing its title, director, and rating_imdb.
+movie_title = "The Batman"
+try:
+    batman_index = movies_data["title"].index(movie_title)
+    director = movies_data["director"][batman_index]
+    rating = movies_data["rating_imdb"][batman_index]
+
+    batman_dict = {
+        "title": movie_title,
+        "director": director,
+        "rating_imdb": rating
+    }
+    print(batman_dict)
+
+except ValueError:
+    print(f"The movie '{movie_title}' was not found in the dataset.")
+
+#4. Write a program that prints all the unique platform names and the number of entries for each platform.
+from collections import Counter
+
+platform_counts = Counter(movies_data["platform"])
+for platform,count in platform_counts.items():
+    print(f"{platform}: {count}")
+
+#5. Create a new dictionary where the keys are director names and the values are lists of titles they directed. Note that some directors may have directed multiple entries.
+from collections import defaultdict
+
+director_to_titles = defaultdict(list)
+
+for title, director in zip(movies_data["title"], movies_data["director"]):
+    if " and " in director:
+        for d in director.split(" and "):
+            director_to_titles[d.strip()].append(title)
+    else:
+        director_to_titles[director.strip()].append(title)
+directors_dict = dict(director_to_titles)
+
+print(directors_dict)
+
+#Class And Objects
+#1. Define a class named Entertainment with an __init__ method that takes title, type, and platform as parameters and assigns them to instance variables.
+class Entertainment:
+
+    def __init__(self, title, type, platform):
+        self.title = title
+        self.type = type
+        self.platform = platform
+
+free_guy_index = movies_data["title"].index("Free Guy")
+free_guy_title = movies_data["title"][free_guy_index]
+free_guy_type = movies_data["type"][free_guy_index]
+free_guy_platform = movies_data["platform"][free_guy_index]
+
+free_guy_entertainment = Entertainment(free_guy_title, free_guy_type, free_guy_platform)
+
+print(f"Title: {free_guy_entertainment.title}")
+print(f"Type: {free_guy_entertainment.type}")
+print(f"Platform: {free_guy_entertainment.platform}")
+
+#2. Create an object (instance) of the Entertainment class using the data for "Dune: Part Two" and print its title and platform.
+class Entertainment:
+    def __init__(self,title,platform):
+        self.title = title
+        self.platform = platform
+
+dune_index = movies_data['title'].index('Dune: Part Two')
+dune_title = movies_data['title'][dune_index]
+dune_platform = movies_data['platform'][dune_index]
+
+dune_entertainment = Entertainment(dune_title, dune_platform)
+
+print(f"Title: {dune_entertainment.title}")
+print(f"platform: {dune_entertainment.platform}")
+
+#3. Add a method to the Entertainment class called get_details() that returns a formatted string with all the instance variables (e.g., "Dune: Part Two is a Movie on Max").
+class Entertainment:
+    def __init__(self, title, year, type, genre, rating_imdb, platform, country, director, cast, synopsis,duration_minutes, box_office_usd, language, metascore):
+        self.title = title
+        self.year = year
+        self.type = type
+        self.genre = genre
+        self.rating_imdb = rating_imdb
+        self.platform = platform
+        self.country = country
+        self.director = director
+        self.cast = cast
+        self.synopsis = synopsis
+        self.duration_minutes = duration_minutes
+        self.box_office_usd = box_office_usd
+        self.language = language
+        self.metascore = metascore
+
+    def get_details(self):
+        return f"{self.title} is a {self.type} ({self.genre}) released in {self.year}. It is available on {self.platform} and has an IMDb rating of {self.rating_imdb}."
+
+entertainment_titles = []
+for i in range(len(movies_data["title"])):
+    entertainment_titles.append(
+        Entertainment(
+            title=movies_data["title"][i],
+            year=movies_data["year"][i],
+            type=movies_data["type"][i],
+            genre=movies_data["genre"][i],
+            rating_imdb=movies_data["rating_imdb"][i],
+            platform=movies_data["platform"][i],
+            country=movies_data["country"][i],
+            director=movies_data["director"][i],
+            cast=movies_data["cast"][i],
+            synopsis=movies_data["synopsis"][i],
+            duration_minutes=movies_data["duration_minutes"][i],
+            box_office_usd=movies_data["box_office_usd"][i],
+            language=movies_data["language"][i],
+            metascore=movies_data["metascore"][i]
+        )
+    )
+
+print("Details for the first five entertainment titles:")
+for i in range(5):
+    print(entertainment_titles[i].get_details())
+
+#4. Create a list of Entertainment objects, one for each entry in the dataset. Then, loop through this list and call the get_details() method for each object.
+class Entertainment:
+    def __init__(self, title, year, type, genre, rating_imdb, platform, country, director, cast, synopsis,duration_minutes, box_office_usd, language, metascore):
+        self.title = title
+        self.year = year
+        self.type = type
+        self.genre = genre
+        self.rating_imdb = rating_imdb
+        self.platform = platform
+        self.country = country
+        self.director = director
+        self.cast = cast
+        self.synopsis = synopsis
+        self.duration_minutes = duration_minutes
+        self.box_office_usd = box_office_usd
+        self.language = language
+        self.metascore = metascore
+
+    def get_details(self):
+        print(f"Title: {self.title}")
+        print(f"Year: {self.year}")
+        print(f"Type: {self.type}")
+        print(f"Genre: {self.genre}")
+        print(f"IMDb Rating: {self.rating_imdb}")
+        print(f"Platform: {self.platform}")
+        print(f"Country: {self.country}")
+        print(f"Director: {self.director}")
+        print(f"Cast: {self.cast}")
+        print(f"Synopsis: {self.synopsis}")
+        if self.type == "Movie":
+            print(f"Duration: {self.duration_minutes} minutes")
+            print(f"Box Office: {self.box_office_usd}")
+            print(f"Metascore: {self.metascore}")
+        else:
+            print(f"Episode Duration: {self.duration_minutes} minutes")
+        print(f"Language: {self.language}")
+        print("-" * 30)
+
+entertainment_objects = []
+for entry in zip(
+        movies_data["title"], movies_data["year"], movies_data["type"], movies_data["genre"],
+        movies_data["rating_imdb"], movies_data["platform"], movies_data["country"],
+        movies_data["director"], movies_data["cast"], movies_data["synopsis"],
+        movies_data["duration_minutes"], movies_data["box_office_usd"],
+        movies_data["language"], movies_data["metascore"]
+):
+    entertainment_objects.append(Entertainment(*entry))
+
+for item in entertainment_objects:
+    item.get_details()
+
+#5.  Define a class called Media Library that contains a list of Entertainment objects as an instance variable. 1. Add methods to this class to:add_media(title, type, platform): Creates a new Entertainment object and adds it to the list. 2. search_by_platform(platform_name): Returns a list of all Entertainment objects on the specified platform.
+class Entertainment:
+    def __init__(self, title, year=None, type=None, genre=None, rating_imdb=None, platform=None, country=None,
+                 director=None, cast=None, synopsis=None, duration_minutes=None, box_office_usd=None, language=None,
+                 metascore=None):
+        self.title = title
+        self.year = year
+        self.type = type
+        self.genre = genre
+        self.rating_imdb = rating_imdb
+        self.platform = platform
+        self.country = country
+        self.director = director
+        self.cast = cast
+        self.synopsis = synopsis
+        self.duration_minutes = duration_minutes
+        self.box_office_usd = box_office_usd
+        self.language = language
+        self.metascore = metascore
+
+    def get_details(self):
+        print(f"Title: {self.title}")
+        print(f"Year: {self.year}")
+        print(f"Type: {self.type}")
+        print(f"Genre: {self.genre}")
+        print(f"IMDb Rating: {self.rating_imdb}")
+        print(f"Platform: {self.platform}")
+        print(f"Country: {self.country}")
+        print(f"Director: {self.director}")
+        print(f"Cast: {self.cast}")
+        print(f"Synopsis: {self.synopsis}")
+        if self.type == "Movie":
+            print(f"Duration: {self.duration_minutes} minutes")
+            print(f"Box Office: {self.box_office_usd}")
+            print(f"Metascore: {self.metascore}")
+        else:
+            print(f"Episode Duration: {self.duration_minutes} minutes")
+        print(f"Language: {self.language}")
+        print("-" * 30)
+
+
+class MediaLibrary:
+    def __init__(self):
+        self.media_list = []
+
+    def add_media(self, title, type, platform, year=None, genre=None, rating_imdb=None, country=None, director=None,cast=None, synopsis=None, duration_minutes=None, box_office_usd=None, language=None, metascore=None):
+        new_media = Entertainment(
+            title=title,
+            year=year,
+            type=type,
+            genre=genre,
+            rating_imdb=rating_imdb,
+            platform=platform,
+            country=country,
+            director=director,
+            cast=cast,
+            synopsis=synopsis,
+            duration_minutes=duration_minutes,
+            box_office_usd=box_office_usd,
+            language=language,
+            metascore=metascore
+        )
+        self.media_list.append(new_media)
+        print(f"Added '{new_media.title}' to the library.")
+
+    def search_by_platform(self, platform_name):
+        results = [media for media in self.media_list if
+                   media.platform and media.platform.lower() == platform_name.lower()]
+        return results
+
+library = MediaLibrary()
+
+for i in range(len(movies_data["title"])):
+    library.add_media(
+        title=movies_data["title"][i],
+        year=movies_data["year"][i],
+        type=movies_data["type"][i],
+        genre=movies_data["genre"][i],
+        rating_imdb=movies_data["rating_imdb"][i],
+        platform=movies_data["platform"][i],
+        country=movies_data["country"][i],
+        director=movies_data["director"][i],
+        cast=movies_data["cast"][i],
+        synopsis=movies_data["synopsis"][i],
+        duration_minutes=movies_data["duration_minutes"][i],
+        box_office_usd=movies_data["box_office_usd"][i],
+        language=movies_data["language"][i],
+        metascore=movies_data["metascore"][i]
+    )
+
+print("\n--- Searching for content on Netflix ---")
+netflix_content = library.search_by_platform("Netflix")
+if netflix_content:
+    for item in netflix_content:
+        item.get_details()
+else:
+    print("No content found on Netflix.")
+
+print("\n--- Searching for content on Prime Video ---")
+prime_video_content = library.search_by_platform("Prime Video")
+if prime_video_content:
+    for item in prime_video_content:
+        item.get_details()
+else:
+    print("No content found on dataset")
+
+
 
