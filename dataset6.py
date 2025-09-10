@@ -145,6 +145,7 @@ movies_data = {
     ]
 }
 
+'''
 #Lists
 #1. What is the title of the movie at index 3 in the title list?
 
@@ -504,7 +505,7 @@ for entry in zip(
 
 for item in entertainment_objects:
     item.get_details()
-
+'''
 #5.  Define a class called Media Library that contains a list of Entertainment objects as an instance variable. 1. Add methods to this class to:add_media(title, type, platform): Creates a new Entertainment object and adds it to the list. 2. search_by_platform(platform_name): Returns a list of all Entertainment objects on the specified platform.
 class Entertainment:
     def __init__(self, title, year=None, type=None, genre=None, rating_imdb=None, platform=None, country=None,
