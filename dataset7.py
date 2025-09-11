@@ -430,3 +430,208 @@ politicians_by_state = group_politicians_by_state(politician_dataset)
 
 import pprint
 pprint.pprint(politicians_by_state)
+
+#5. Create custom groups: Write a function that takes a list of field names (like name and party) and uses them to create a new dictionary. The keys should combine the values of those fields (e.g., 'Narendra Modi_BJP'), and the value should be the politician's full information.
+def create_custom_groups(dataset, fields_to_group):
+    grouped_data = {}
+    for item in dataset:
+        key_parts = [str(item.get(field)) for field in fields_to_group if field in item]
+        if key_parts:
+            combined_key = "_".join(key_parts)
+            grouped_data[combined_key] = item
+    return grouped_data
+
+grouped_by_name_and_party = create_custom_groups(politician_dataset, ["name", "party"])
+print(grouped_by_name_and_party.get("Narendra Modi_Bharatiya Janata Party (BJP)"))
+
+#Class and Objects
+#1. Create a Politician blueprint: Write a class called Politician that can hold information like a politician's name, position, and party.
+class Politician:
+    def __init__(self, name, position, party, constituency, start_date):
+        self.name = name
+        self.position = position
+        self.party = party
+        self.constituency = constituency
+        self.start_date = start_date
+
+    def __str__(self):
+        return f"{self.name} ({self.party}) - {self.position}"
+
+politician_objects = [
+    Politician(
+        name=data["name"],
+        position=data["position"],
+        party=data["party"],
+        constituency=data["constituency"],
+        start_date=data["start_date"]
+    )
+    for data in politician_dataset
+]
+
+print("--- Using the Politician Class ---")
+for politician in politician_objects:
+    print(politician)
+
+#2. Make a politician: Create a new Politician object for 'Yogi Adityanath' and display their information.
+politician_info = None
+for politician in politician_dataset:
+    if politician["name"] == "Yogi Adityanath":
+        politician_info = politician
+        break
+
+if politician_info:
+    print("Politician Found:")
+    for key, value in politician_info.items():
+        print(f"{key.replace('_', ' ').title()}: {value}")
+else:
+    print("Politician 'Yogi Adityanath' not found in the dataset.")
+
+#3. Add a filter: Add a feature to your Politician class to find all politicians who belong to a certain party.
+class Politician:
+    def __init__(self, name, position, party, constituency, start_date):
+        self.name = name
+        self.position = position
+        self.party = party
+        self.constituency = constituency
+        self.start_date = start_date
+
+    def __repr__(self):
+        return f'Politician(name="{self.name}", party="{self.party}")'
+
+    @classmethod
+    def find_by_party(cls, politicians_data, party_name):
+        return [
+            cls(p["name"], p["position"], p["party"], p["constituency"], p["start_date"])
+            for p in politicians_data
+            if p["party"].lower() == party_name.lower()
+        ]
+
+
+bjp_politicians = Politician.find_by_party(politician_dataset, "Bharatiya Janata Party (BJP)")
+inc_politicians = Politician.find_by_party(politician_dataset, "Indian National Congress (INC)")
+dmk_politicians = Politician.find_by_party(politician_dataset, "Dravida Munnetra Kazhagam (DMK)")
+tmc_politicians = Politician.find_by_party(politician_dataset, "All India Trinamool Congress (TMC)")
+aap_politicians = Politician.find_by_party(politician_dataset, "Aam Aadmi Party (AAP)")
+
+print(f"Politicians from BJP ({len(bjp_politicians)} found):")
+for p in bjp_politicians:
+    print(f"- {p.name}")
+
+print("\n" + "-" * 30 + "\n")
+print(f"Politicians from INC ({len(inc_politicians)} found):")
+for p in inc_politicians:
+    print(f"- {p.name}")
+
+print("\n" + "-" * 30 + "\n")
+print(f"Politicians from Dravida Munnetra Kazhagam (DMK) ({len(dmk_politicians)} found):")
+for p in dmk_politicians:
+    print(f"- {p.name}")
+
+print("\n" + "-" * 30 + "\n")
+print(f"Politicians from All India Trinamool Congress (TMC) ({len(tmc_politicians)} found):")
+for p in tmc_politicians:
+    print(f"- {p.name}")
+
+print("\n" + "-" * 30 + "\n")
+print(f"Politicians from Aam Aadmi Party (AAP) ({len(aap_politicians)} found):")
+for p in aap_politicians:
+    print(f"- {p.name}")
+
+#4. Organize objects: Make a list of Politician objects from the dataset. Then, create a function that puts these objects into a dictionary, grouping them by their position.
+from collections import defaultdict
+
+class Politician:
+    def __init__(self, name, position, party, constituency, start_date):
+        self.name = name
+        self.position = position
+        self.party = party
+        self.constituency = constituency
+        self.start_date = start_date
+
+    def __repr__(self):
+        return f"Politician('{self.name}', '{self.position}')"
+
+def create_politician_objects(dataset):
+    politician_objects = []
+    for data in dataset:
+        politician_objects.append(
+            Politician(
+                data["name"],
+                data["position"],
+                data["party"],
+                data["constituency"],
+                data["start_date"],
+            )
+        )
+    return politician_objects
+
+def group_by_position(politician_list):
+    grouped_by_position = defaultdict(list)
+    for politician in politician_list:
+        grouped_by_position[politician.position].append(politician)
+    return dict(grouped_by_position)
+
+all_politicians = create_politician_objects(politician_dataset)
+
+politicians_by_position = group_by_position(all_politicians)
+
+for position, politicians in politicians_by_position.items():
+    print(f"--- {position} ---")
+    for politician in politicians:
+        print(f"  - {politician.name}")
+    print()
+
+#5. Create a special class: Create a main Politician class. Then, make a new, more specific ChiefMinister class that adds a function to break down the constituency into the city and state. Use this to create an object for a chief minister.
+class Politician:
+    def __init__(self, name, position, party, constituency, start_date):
+        self.name = name
+        self.position = position
+        self.party = party
+        self.constituency = constituency
+        self.start_date = start_date
+
+
+class ChiefMinister(Politician):
+    def __init__(self, name, position, party, constituency, start_date):
+        super().__init__(name, position, party, constituency, start_date)
+        self.city = "N/A"
+        self.state = "N/A"
+        self.break_down_constituency()
+
+    def break_down_constituency(self):
+        if self.constituency != "N/A":
+            parts = [p.strip() for p in self.constituency.split(',')]
+            if len(parts) == 2:
+                self.city = parts[0]
+                self.state = parts[1]
+
+
+def find_chief_ministers(dataset):
+    return [p for p in dataset if "Chief Minister" in p["position"]]
+
+def main():
+    cm_data = find_chief_ministers(politician_dataset)
+    if cm_data:
+        first_cm_dict = cm_data[0]
+        cm_object = ChiefMinister(
+            name=first_cm_dict["name"],
+            position=first_cm_dict["position"],
+            party=first_cm_dict["party"],
+            constituency=first_cm_dict["constituency"],
+            start_date=first_cm_dict["start_date"]
+        )
+
+        print(f"Created ChiefMinister object for: {cm_object.name}\n")
+        print("Original Details:")
+        print(f"Name: {cm_object.name}")
+        print(f"Position: {cm_object.position}")
+        print(f"Constituency: {cm_object.constituency}\n")
+        print("Constituency Breakdown:")
+        print(f"City: {cm_object.city}")
+        print(f"State: {cm_object.state}")
+    else:
+        print("No Chief Ministers found in the dataset.")
+
+
+if __name__ == "__main__":
+    main()
