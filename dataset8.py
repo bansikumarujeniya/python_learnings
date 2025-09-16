@@ -456,7 +456,7 @@ bald_eagle = Bird(eagle_data["common_name"], eagle_data["scientific_name"])
 print(f"\nObject created for: {bald_eagle.common_name}")
 print(f"Scientific name: {bald_eagle.scientific_name}")
 
-'''
+
 #2. Create an object of your Bird class for the "Barn Owl" with its common and scientific name.
 class Bird:
     def __init__(self, common_name, scientific_name):
@@ -516,3 +516,43 @@ print(f"Original status of {emperor_penguin.common_name}: {emperor_penguin.conse
 emperor_penguin.update_status("Vulnerable")
 
 print(f"Updated status of {emperor_penguin.common_name}: {emperor_penguin.conservation_status}")
+'''
+#5. Modify your Bird class to include all the data from the birds_dataset. Then, create a function that populates a list with Bird objects based on the birds_dataset and returns a dictionary where the key is the common_name and the value is the Bird object.
+class Bird:
+    def __init__(self, common_name, scientific_name, family, habitat, conservation_status):
+        self.common_name = common_name
+        self.scientific_name = scientific_name
+        self.family = family
+        self.habitat = habitat
+        self.conservation_status = conservation_status
+
+    def __repr__(self):
+        return (f"Bird(common_name='{self.common_name}', "
+                f"scientific_name='{self.scientific_name}', "
+                f"family='{self.family}', "
+                f"habitat='{self.habitat}', "
+                f"conservation_status='{self.conservation_status}')")
+
+def populate_birds_data(birds_dataset):
+    bird_objects_list = []
+    bird_dictionary = {}
+    for bird_key, bird_info in birds_dataset.items():
+        bird = Bird(
+            common_name=bird_info["common_name"],
+            scientific_name=bird_info["scientific_name"],
+            family=bird_info["family"],
+            habitat=bird_info["habitat"],
+            conservation_status=bird_info["conservation_status"]
+        )
+        bird_objects_list.append(bird)
+        bird_dictionary[bird.common_name] = bird
+
+    return bird_objects_list, bird_dictionary
+
+
+bird_list, bird_dict = populate_birds_data(birds_dataset)
+
+print("Example from the list:", bird_list[0])
+print("Example from the dictionary:", bird_dict["Bald Eagle"])
+print("\nTotal objects created:", len(bird_list))
+print("Total entries in dictionary:", len(bird_dict))
