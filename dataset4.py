@@ -118,7 +118,6 @@ for item in sorted_by_company:
     print(item)
 
 #4. Aggregation: Calculate and return the total number of unique job titles present in the dataset.
-
 def count_unique_job_titles(dataset):
     job_titles = [entry['job_title'] for entry in dataset]
     unique_job_titles = set(job_titles)
