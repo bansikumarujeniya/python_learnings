@@ -247,3 +247,192 @@ sorted_by_gestation = sorted(common_name_gestation, key=lambda item: get_lowest_
 for animal in sorted_by_gestation:
     print(animal)
 
+#Dictionary
+#1. Assuming a new dictionary is created mapping common_name to family, find the family of the "Giraffe".
+index = animal_dataset["common_name"].index("Giraffe")
+family_of_giraffe = animal_dataset["family"][index]
+print(family_of_giraffe)
+
+#2. How many different keys are in the animal_dataset dictionary?
+print(len(animal_dataset.keys()))
+
+#3. what is the average_weight_kg of the animal "Tasmanian Devil"?
+index = animal_dataset["common_name"].index("Tasmanian Devil")
+tasmanian_weight = animal_dataset["average_weight_kg"][index]
+print(tasmanian_weight)
+
+#4. Get a list of all the values in the "family" key.
+all_families = animal_dataset["family"]
+print(all_families)
+
+#5. Create a new dictionary from animal_dataset that only includes the keys "common_name", "habitat", and "diet".
+new_dict = {
+    "common_name": animal_dataset["common_name"],
+    "habitat": animal_dataset["habitat"],
+    "diet": animal_dataset["diet"]
+}
+print(new_dict)
+
+#6. Write a function that takes a common name as input and returns the entire data of that animal.
+def get_animal_data(common_name):
+    if common_name in animal_dataset["common_name"]:
+        index = animal_dataset["common_name"].index(common_name)
+        result = {}
+        for key in animal_dataset.keys():
+            result[key] = animal_dataset[key][index]
+        return result
+    else:
+        return "Animal not found"
+
+print(get_animal_data("Lion"))
+
+#7. Create a dictionary mapping the common name to the gestation period for all animals.
+gestation_dict = dict(zip(animal_dataset["common_name"], animal_dataset["gestation_period_days"]))
+print(gestation_dict)
+
+#8. Find all animals with a "conservation_status" of "Endangered" and store their common names and scientific names in a new dictionary.
+endangered_animals = {}
+for i, status in enumerate(animal_dataset["conservation_status"]):
+    if status == "Endangered":
+        endangered_animals[animal_dataset["common_name"][i]] = animal_dataset["scientific_name"][i]
+
+print(endangered_animals)
+
+#9. Create a dictionary where the keys are the diets ("Herbivore", "Carnivore", "Omnivore") and the values are lists of the common names of animals that have that diet.
+diet_dict = {}
+for i, diet in enumerate(animal_dataset["diet"]):
+    if diet not in diet_dict:
+        diet_dict[diet] = []
+    diet_dict[diet].append(animal_dataset["common_name"][i])
+
+print(diet_dict)
+
+#10. Create a new dictionary where keys are the common_name and values are a nested dictionary of their habitat and lifespan_years.
+habitat_lifespan_dict = {}
+for i, name in enumerate(animal_dataset["common_name"]):
+    habitat_lifespan_dict[name] = {
+        "habitat": animal_dataset["habitat"][i],
+        "lifespan_years": animal_dataset["lifespan_years"][i]
+    }
+
+print(habitat_lifespan_dict)
+
+#Class and Objects
+#1. Write a Animal class with an __init__ method that accepts and stores the common_name and scientific_name.
+class Animal:
+    def __init__(self, common_name, scientific_name):
+        self.common_name = common_name
+        self.scientific_name = scientific_name
+
+#2. Create an instance of your Animal class for the "Lion".
+lion = Animal("Lion", "Panthera leo")
+print(lion.common_name, lion.scientific_name)
+
+#3. Add a display_info() method to your Animal class that prints the common name and habitat of an animal object.
+class Animal:
+    def __init__(self, common_name, scientific_name, habitat=None):
+        self.common_name = common_name
+        self.scientific_name = scientific_name
+        self.habitat = habitat
+
+    def display_info(self):
+        print("Common Name:", self.common_name)
+        print("Habitat:", self.habitat)
+
+#4. Call the display_info() method for the "Koala" object.
+index = animal_dataset["common_name"].index("Koala")
+koala = Animal(
+    animal_dataset["common_name"][index],
+    animal_dataset["scientific_name"][index],
+    animal_dataset["habitat"][index]
+)
+koala.display_info()
+
+#5. Expand your Animal class to include all fields from the animal_dataset.
+class Animal:
+    def __init__(self, index):
+        self.common_name = animal_dataset["common_name"][index]
+        self.scientific_name = animal_dataset["scientific_name"][index]
+        self.family = animal_dataset["family"][index]
+        self.habitat = animal_dataset["habitat"][index]
+        self.diet = animal_dataset["diet"][index]
+        self.lifespan_years = animal_dataset["lifespan_years"][index]
+        self.conservation_status = animal_dataset["conservation_status"][index]
+        self.average_weight_kg = animal_dataset["average_weight_kg"][index]
+        self.average_speed_kmh = animal_dataset["average_speed_kmh"][index]
+        self.gestation_period_days = animal_dataset["gestation_period_days"][index]
+        self.social_structure = animal_dataset["social_structure"][index]
+        self.notable_feature = animal_dataset["notable_feature"][index]
+
+    def display_info(self):
+        print("Common Name:", self.common_name)
+        print("Habitat:", self.habitat)
+
+#6. Create a list of Animal objects for all animals in the dataset and then print the common_name of the third animal in the list.
+animals = [Animal(i) for i in range(len(animal_dataset["common_name"]))]
+print(animals[2].common_name)
+
+#7. Modify the Animal class to include a method is_carnivore() that returns True if the animal's diet is "Carnivore" and False otherwise.
+class Animal:
+    def __init__(self, index):
+        self.common_name = animal_dataset["common_name"][index]
+        self.scientific_name = animal_dataset["scientific_name"][index]
+        self.diet = animal_dataset["diet"][index]
+        self.lifespan_years = animal_dataset["lifespan_years"][index]
+        self.conservation_status = animal_dataset["conservation_status"][index]
+        self.average_weight_kg = animal_dataset["average_weight_kg"][index]
+        self.average_speed_kmh = animal_dataset["average_speed_kmh"][index]
+        self.gestation_period_days = animal_dataset["gestation_period_days"][index]
+        self.social_structure = animal_dataset["social_structure"][index]
+        self.notable_feature = animal_dataset["notable_feature"][index]
+
+    def is_carnivore(self):
+        return self.diet == "Carnivore"
+
+#8. Create a function that takes the list of Animal objects and returns a new list containing only the objects of carnivorous animals.
+def is_carnivore(animal):
+    if hasattr(animal, "diet") and isinstance(animal.diet, str):
+        return "carn" in animal.diet.lower()
+    if hasattr(animal, "food_type") and isinstance(animal.food_type, str):
+        return "carn" in animal.food_type.lower()
+    return False
+
+def get_carnivores(animal_list):
+    return [animal for animal in animal_list if is_carnivore(animal)]
+
+carnivores = get_carnivores(animals)
+print([a.common_name for a in carnivores])
+
+#9. Create a function that populates a list with Animal objects based on the animal_dataset. Then, find the animal with the longest lifespan (maximum value in "lifespan_years") and print all its details using its object.
+def longest_lifespan(animal_list):
+    max_animal = None
+    max_years = 0
+    for animal in animal_list:
+        years = max(map(int, animal.lifespan_years.split("-")))
+        if years > max_years:
+            max_years = years
+            max_animal = animal
+    return max_animal
+
+longest = longest_lifespan(animals)
+longest.display_info()
+print("Lifespan:", longest.lifespan_years)
+
+#10. Add a new method change_conservation_status(new_status) to the Animal class. Then, find the "Emperor Penguin" object and update its status from "Near Threatened" to "Vulnerable" using this method.
+class Animal:
+    def __init__(self, index):
+        self.common_name = animal_dataset["common_name"][index]
+        self.scientific_name = animal_dataset["scientific_name"][index]
+        self.conservation_status = animal_dataset["conservation_status"][index]
+
+    def change_conservation_status(self, new_status):
+        self.conservation_status = new_status
+
+index = animal_dataset["common_name"].index("Emperor Penguin")
+penguin = Animal(index)
+print("Before:", penguin.conservation_status)
+
+penguin.change_conservation_status("Vulnerable")
+print("After:", penguin.conservation_status)
+
+
